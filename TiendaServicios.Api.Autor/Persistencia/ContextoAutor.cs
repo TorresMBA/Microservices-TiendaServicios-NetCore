@@ -10,6 +10,6 @@ namespace TiendaServicios.Api.Autor.Persistencia {
         public ContextoAutor(DbContextOptions<ContextoAutor> options) : base(options){ }
         public DbSet<AutorLibro> AutorLibro { get; set; }
 
-        public DbSet<GradoAcademico> GraddoAcademico { get; set; }
+        public DbSet<GradoAcademico> GradoAcademico { get; set; }
     }
 }
