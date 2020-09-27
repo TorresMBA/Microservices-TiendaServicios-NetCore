@@ -34,6 +34,8 @@ namespace TiendaServicios.Api.Autor {
             //Base => services.AddControllers(); Modificando =>
             services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());// De esta forma es como se inicializa el Fluent Validation dentro del proyecto
                                                                                                                         //En este caso en concreto estoy indicandolo que incliya el fluent validation en la clase Nuevo
+            //Porque bota error en esta en linea en Azure DevOps
+            //introduciendo lineas para modificar en github y azure
             services.AddDbContext<ContextoAutor>(options => {
                 options.UseNpgsql(Configuration.GetConnectionString("ConexionDataBase"));
             });
