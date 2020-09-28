@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64399",
+      "applicationUrl": "http://localhost:55051",
       "sslPort": 0
     }
   },
@@ -12,15 +12,15 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/autor",
+      "launchUrl": "api/Autor",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TiendaServicios.Api.Autor": {
+    "TiendaServicios.Api.Autors": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/autor",
+      "launchUrl": "weatherforecast",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using TiendaServicios.Api.Autor.Aplicacion;
 using TiendaServicios.Api.Autor.Persistencia;
 
-namespace TiendaServicios.Api.Autor {
+namespace TiendaServicios.Api.Autors {
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -37,6 +37,7 @@ namespace TiendaServicios.Api.Autor {
             //Porque bota error en esta en linea en Azure DevOps
             //introduciendo lineas para modificar en github y azure
             services.AddDbContext<ContextoAutor>(options => {
+                //options.UseNpgsql(Configuration.GetConnectionString("ConexionDataBase"));
                 options.UseNpgsql(Configuration.GetConnectionString("ConexionDataBase"));
             });
 
