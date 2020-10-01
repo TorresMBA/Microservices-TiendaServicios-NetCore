@@ -1,0 +1,13 @@
+version: '3.4'
+
+#Este archivo describe lo que va a contener mi Docker Compose en este caso esta incluyendo el servicio tiendaservicios.api
+services:
+  tiendaservicios.api.autors:
+    image: ${DOCKER_REGISTRY-}tiendaserviciosapiautors #Lo que dice este codigo es que este servicio se esta instanciando desde una imagen denominada tiendaservicios.api,Autors
+    build:
+      context: .
+      dockerfile: TiendaServicios.Api.Autors/Dockerfile #Como se genera es imagen ? a travez de esta linea  atrvez de este dockerfile ubicado en : la ruta que sale 
+networks:
+  default:
+    external:
+      name: microservicenet
