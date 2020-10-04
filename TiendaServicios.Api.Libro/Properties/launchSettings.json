@@ -1,14 +1,13 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      //Esta es la url en la que se ejecuta esta microservice
-      "applicationUrl": "http://localhost:64406",
+      "applicationUrl": "http://localhost:64406", // Solo debe aparecer esta linea si sale otra linea de hhtpps borrarla igual en los demas proyectos
       "sslPort": 0
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -22,10 +21,16 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/LibroMaterial",
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/LibroMaterial",
+      "publishAllPorts": true
     }
   }
 }

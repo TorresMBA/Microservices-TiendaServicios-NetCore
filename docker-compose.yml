@@ -7,7 +7,16 @@ services:
     build:
       context: .
       dockerfile: TiendaServicios.Api.Autors/Dockerfile #Como se genera es imagen ? a travez de esta linea  atrvez de este dockerfile ubicado en : la ruta que sale 
+  tiendaservicios.api.libro:
+    image: ${DOCKER_REGISTRY-}tiendaserviciosapilibro
+    build:
+      context: .
+      dockerfile: TiendaServicios.Api.Libro/Dockerfile
+
 networks:
   default:
     external:
       name: microservicenet
+      #Pero profesor no se supone que deberiamos llevar este container microserviceapilibro dentro de nuestra networks
+      #Si pero debemos acordar que dentro del docker-Compose ya nosotros pusimos de forma global
+      #todos los servicios que vbauamos agregando dentro del docker-Compose van a estar dentro del microservicenet
