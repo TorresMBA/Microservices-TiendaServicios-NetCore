@@ -1,0 +1,28 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/LibroMaterial", //
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.libro",
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/Libro",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/LibroMaterial/{id}", //Se le agrega el parametro id 
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.libro",
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/Libro/{id}", //Para que el usuario se comunica lo hace atrevez de /librp/id
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    }
+  ]
+}
