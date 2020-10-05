@@ -10,7 +10,8 @@
         }
       ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
       "UpstreamPathTemplate": "/Libro",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "Key": "LibroTotal"
     },
     {
       "DownstreamPathTemplate": "/api/LibroMaterial/{id}", //Se le agrega el parametro id 
@@ -23,6 +24,64 @@
       ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
       "UpstreamPathTemplate": "/Libro/{id}", //Para que el usuario se comunica lo hace atrevez de /librp/id
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Autor", //Se le agrega el parametro id 
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.autors", //En este costo seria el nombre de nuestro proyecto en docker container 
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/Autor", //Para que el usuario se comunica lo hace atrevez de /librp/id, es como se conectara el cliente
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "Key": "AutorTotal"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Autor/{id}", //Se le agrega el parametro id 
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.autors", //En este costo seria el nombre de nuestro proyecto en docker container 
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/Autor/{id}", //Para que el usuario se comunica lo hace atrevez de /librp/id, es como se conectara el cliente
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/CarritoCompras", //
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.carritocompra",
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/CarritoCompra",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/CarritoCompras/{id}", //
+      "DownstreamScheme": "http", //Indicar el protocolo en que se llevara acabo esta comuniicacion
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tiendaservicios.api.carritocompra",
+          "Port": "80"
+        }
+      ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
+      "UpstreamPathTemplate": "/CarritoCompra/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "AutorTotal",
+        "LibroTotal"
+      ],
+      "UpstreamPathTemplate": "/LibroAutor"
     }
   ]
 }
