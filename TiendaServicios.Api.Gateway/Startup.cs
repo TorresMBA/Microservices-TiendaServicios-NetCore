@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using TiendaServicios.Api.Gateway.ImplementRemote;
+using TiendaServicios.Api.Gateway.InterfaceRemote;
+using TiendaServicios.Api.Gateway.MessageHandler;
 
 namespace TiendaServicios.Api.Gateway {
     public class Startup {
@@ -23,7 +26,13 @@ namespace TiendaServicios.Api.Gateway {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             //services.AddControllers();
-            services.AddOcelot();
+            services.AddSingleton<IAutorRemote, AutorRemote>();
+
+            services.AddOcelot().AddDelegatingHandler<LibroHandler>();
+
+            services.AddHttpClient("AutorService", config => {
+                config.BaseAddress = new Uri(Configuration["Services:Autor"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

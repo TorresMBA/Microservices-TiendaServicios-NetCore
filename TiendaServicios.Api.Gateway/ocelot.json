@@ -23,7 +23,10 @@
         }
       ], //Definir la base de mi url, en este caso indica el nombre del servidor y el puerto en que se ejecuta
       "UpstreamPathTemplate": "/Libro/{id}", //Para que el usuario se comunica lo hace atrevez de /librp/id
-      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "DelegatingHandlers": [
+        "LibroHandler"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/Autor", //Se le agrega el parametro id 
