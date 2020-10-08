@@ -29,7 +29,11 @@ namespace TiendaServicios.Api.Libro {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
 
-            services.AddTransient<IRabbitEventBus, RabbitEventbus>();
+            //services.AddTransient<IRabbitEventBus, RabbitEventbus>();
+            services.AddSingleton<IRabbitEventBus, RabbitEventbus>(sp => {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitEventbus(sp.GetService<IMediator>(), scopeFactory);
+            });
 
             //Se modificara para poder iniciar el FluenteValidation
             services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());

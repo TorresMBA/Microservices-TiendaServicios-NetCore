@@ -15,6 +15,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TiendaServicios.Api.Autor.Aplicacion;
 using TiendaServicios.Api.Autor.Persistencia;
+using TiendaServicios.Api.Autors.ManejadorRabbitMQ;
+using TiendaServicios.Mensajeria.Email.SendGridLibreria.Implement;
+using TiendaServicios.Mensajeria.Email.SendGridLibreria.Interface;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
+using TiendaServicios.RabbitMQ.Bus.EventoQueue;
+using TiendaServicios.RabbitMQ.Bus.Implement;
 
 namespace TiendaServicios.Api.Autors {
     public class Startup {
@@ -28,6 +34,18 @@ namespace TiendaServicios.Api.Autors {
         //Debemos incluirlo como parte de los servicios que se van a Instanciar al arrancar mi programa dentro esta clase (Startup.cs) dentron de Configure Service
         //Fluent Validation, ContextoAturo, Libreria MediaTr
         public void ConfigureServices(IServiceCollection services) {
+
+            services.AddSingleton<IRabbitEventBus, RabbitEventbus>(sp => {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitEventbus(sp.GetService<IMediator>(), scopeFactory);
+            });
+
+            services.AddSingleton<ISendGridEnviar, SendGridEnviar>();   
+
+            services.AddTransient<EmailEventoManejador>();
+
+            services.AddTransient<IEventoManejador<EmailEventQueue>, EmailEventoManejador>();
+
             //si quiero editar y creo otra clase para editar autores? Se tendria que agregar una linea adicionar del Fluent?
             //no es necesario hacerlo porque desde el momento que arranque mi proyecyo el lfuent validation lo que hara es buscar 
             //todas las clases c# que esten herando de la clase abstranValidation y los va a instanciar automaticamente 
@@ -59,6 +77,9 @@ namespace TiendaServicios.Api.Autors {
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
+
+            var eventBus = app.ApplicationServices.GetRequiredService<IRabbitEventBus>();
+            eventBus.Suscribe<EmailEventQueue, EmailEventoManejador>();
         }
     }
 }
