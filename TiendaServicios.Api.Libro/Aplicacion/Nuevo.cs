@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using TiendaServicios.Api.Libros.Modelo;
 using TiendaServicios.Api.Libros.Persistencia;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
+using TiendaServicios.RabbitMQ.Bus.EventoQueue;
 
 namespace TiendaServicios.Api.Libro.Aplicacion {
     public class Nuevo {
@@ -21,6 +23,7 @@ namespace TiendaServicios.Api.Libro.Aplicacion {
 
         //Validacion de los campos
         public class EjecutaValidacion : AbstractValidator<Ejecuta> {
+
             public EjecutaValidacion() {
                 RuleFor(x => x.Titulo).NotEmpty();
                 RuleFor(x => x.FechaPublicacion).NotEmpty();
@@ -29,10 +32,14 @@ namespace TiendaServicios.Api.Libro.Aplicacion {
         }
 
         public class Manejador : IRequestHandler<Ejecuta> {
+
             private readonly ContextoLibreria _contexto;
 
-            public Manejador(ContextoLibreria contexto) {
+            private readonly IRabbitEventBus _eventBus;
+
+            public Manejador(ContextoLibreria contexto, IRabbitEventBus eventBus) {
                 _contexto = contexto;
+                _eventBus = eventBus;
             }
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken) {
@@ -44,6 +51,9 @@ namespace TiendaServicios.Api.Libro.Aplicacion {
 
                 _contexto.LibreriaMaterial.Add(libro);
                 var value = await _contexto.SaveChangesAsync();
+
+                _eventBus.Publish(new EmailEventQueue("bryan98tm@gmail.com", request.Titulo, "Contenido de Ejemplo"));
+
                 if(value > 0) {
                     return Unit.Value;
                 }
